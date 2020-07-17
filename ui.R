@@ -28,7 +28,9 @@ shinyUI(fluidPage(
                     start  = startTime, end    = endTime,
                     min    = startTime, max    = endTime,
                     format = "mm/dd/yy",
-                    separator = " - ")
+                    separator = " - "),
+        sliderInput("smoother", "Graph smoothing:",
+                    min = 0.01, max = 0.25, value = 0.04, step = 0.01)
         ),
         mainPanel(
             tabsetPanel(

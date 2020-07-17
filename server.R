@@ -50,7 +50,11 @@ shinyServer(function(input, output) {
         weekdata$WeekSent <- as.factor(weekdata$WeekSent)
         print(
             ggplot(weekdata, aes(x = WeekSent, y = n)) +
-                geom_area(aes(group = channel_name, fill = channel_name), color = "black", size = 0.1) +
+                stat_smooth(
+                    geom = "area", method = "loess", span = input$smoother,
+                    aes(group = channel_name, fill = channel_name),
+                    position = "stack", color = "black", size = 0.1
+                ) +
                 scale_fill_manual(values=cbbPalette)
         )
     })
@@ -87,7 +91,10 @@ shinyServer(function(input, output) {
         channeldata$WeekSent <- as.factor(channeldata$WeekSent)
         print(
             ggplot(channeldata, aes(x = WeekSent, y = n,  group = channel_name, color = channel_name)) +
-            geom_line()
+            stat_smooth(
+                    geom = "line", method = "loess", span = input$smoother
+                )
+            #geom_line()
         )
     })
     
