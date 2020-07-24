@@ -11,10 +11,16 @@ for (i in 1:length(channels)) {
   channels[[i]] <- channels[[i]] %>%
     mutate(channel_name = JSON$Channels[[i]]$Name)
 }
-people <- bind_rows(JSON$People)
+people <- bind_rows(JSON$People, )
+people <- rbind(people, c("Other", "Other", "Other", FALSE, "Other"))
 people$ID <- as.factor(people$ID)
 attachments <- bind_rows(JSON$Attachments)
 reactions <- bind_rows(JSON$Reactions)
 messages <- bind_rows(channels)
 messages$channel_name <- as.factor(messages$channel_name)
 messages$Author <- as.factor(messages$Author)
+
+saveRDS(people, "people.rds")
+saveRDS(attachments, "attachments.rds")
+saveRDS(reactions, "reactions.rds")
+saveRDS(messages, "messages.rds")
