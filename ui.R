@@ -29,15 +29,26 @@ shinyUI(fluidPage(
                     min    = startTime, max    = endTime,
                     format = "mm/dd/yy",
                     separator = " - "),
+        sliderInput("period", "Number of weeks to plot by:",
+                    min = 1, max = 4, value = 1),
         sliderInput("smoother", "Graph smoothing:",
-                    min = 0.01, max = 0.25, value = 0.04, step = 0.01)
+                    min = 0, max = 1, value = 0, step = 0.01),
+        radioButtons("fct_grouping", "Group by:",
+                     c("User" = "author",
+                       "Channel" = "channel")),
+        radioButtons("stacking", "Stack plots:",
+                     c("Stacked" = "stacked",
+                       "Non-stacked" = "line")),
+        radioButtons("smoothing", "Smooth line plot:",
+                     c("Smooth" = "smooth",
+                       "Raw" = "raw"))
         ),
         mainPanel(
             tabsetPanel(
                 # Application title
-                tabPanel("Top Channels", plotOutput("distPlot")),
-                tabPanel("Channel Data", plotOutput("channelPlot")),
-                tabPanel("Word Cloud", plotOutput("wordcloudPlot"))
+                tabPanel("Top Channels", plotOutput("linePlot")),
+                tabPanel("Word Cloud", plotOutput("wordcloudPlot"))#,
+                #tabPanel("Testing", plotOutput("testPlot"))
             )
         )
     )
